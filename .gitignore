@@ -2,3 +2,4 @@ assignment-2/frontend/node_modules
 assignment-2/frontend/.next
 .gitignore
 assignment-2/frontend/public
+.env
