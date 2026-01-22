@@ -1,14 +1,14 @@
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoutes";
 import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
-import Dashboard from "../pages/Dashboard";
 import ProfilePage from "../pages/Profile";
 import NotFoundPage from "../pages/NotFound";
 import ResetPasswordPage from "../pages/ResetPassword";
+import FolderPage from "../pages/FolderPage";
+import AppShell from "../layouts/MainLayout";
 
 const AppRoutes = () => {
   return (
@@ -41,11 +41,11 @@ const AppRoutes = () => {
       <Route
         element={
           <ProtectedRoute>
-            <MainLayout />
+            <AppShell />
           </ProtectedRoute>
         }
       >
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/folders/:folderId" element={<FolderPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
       <Route path="/reset-password/:token" element={<ResetPasswordPage />} />

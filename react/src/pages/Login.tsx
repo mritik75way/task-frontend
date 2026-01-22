@@ -18,7 +18,7 @@ export default function Login() {
   const onFinish = async (values: LoginFormValues) => {
     const { data } = await loginApi(values);
     dispatch(loginSuccess(data));
-    navigate("/");
+    navigate("/folders/root");
   };
 
   return (

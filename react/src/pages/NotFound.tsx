@@ -13,7 +13,7 @@ const NotFoundPage = () => {
         extra={
           <Button 
             type="primary" 
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/folders/root')}
             className="bg-blue-600 rounded-lg h-10 px-6 font-semibold shadow-md border-none hover:bg-blue-700"
           >
             Back to Home

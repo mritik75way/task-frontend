@@ -1,20 +1,16 @@
-import { Layout } from 'antd';
-import { Outlet } from 'react-router-dom';
-import {AppNavbar} from '../components/AppNavbar'; // The navbar we created
+import { Layout } from "antd";
+import { Outlet } from "react-router-dom";
+import UploadPopper from "../components/UploadPopper";
 
 const { Content } = Layout;
 
-const MainLayout = () => {
+export default function AppShell() {
   return (
     <Layout className="min-h-screen">
-      <AppNavbar />
-      <Content className="p-6 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
+        <Content className="p-6 bg-gray-50">
           <Outlet />
-        </div>
-      </Content>
+        </Content>
+      <UploadPopper />
     </Layout>
   );
-};
-
-export default MainLayout;
+}
