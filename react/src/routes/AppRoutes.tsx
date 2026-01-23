@@ -9,6 +9,7 @@ import NotFoundPage from "../pages/NotFound";
 import ResetPasswordPage from "../pages/ResetPassword";
 import FolderPage from "../pages/FolderPage";
 import AppShell from "../layouts/MainLayout";
+import NotificationPage from "../pages/NotificationPage";
 
 const AppRoutes = () => {
   return (
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         }
       >
         <Route path="/folders/:folderId" element={<FolderPage />} />
+        <Route path="/notifications" element = {<NotificationPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
       <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
