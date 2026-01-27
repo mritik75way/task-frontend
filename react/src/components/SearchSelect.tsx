@@ -1,13 +1,8 @@
 import Select from "react-select";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAllFiles } from "../services/search";
-
-interface Option {
-  label: string;
-  value: string;
-  folderId: string;
-}
+import type { Option } from "../features/uploads/upload.types";
+import { fetchAllFiles } from "../features/uploads/upload.api";
 
 function SearchSelect() {
   const [options, setOptions] = useState<Option[]>([]);

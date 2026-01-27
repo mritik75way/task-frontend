@@ -3,12 +3,10 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import FolderGrid from "../components/FolderGrid";
 import FileList from "../components/FileList";
-
-import { startUpload } from "../features/uploads/uploadManager";
-import { type FileItem } from "../types/file";
+import { startUpload } from "../features/uploads/upload.manager";
 import DragDropZone from "../components/DragAndDropZone";
-import { deleteFile, fetchFiles } from "../services/files";
-
+import type { FileItem } from "../features/uploads/upload.types";
+import { deleteFile, fetchFiles } from "../features/uploads/upload.api";
 
 const demoFolders = [
   { id: "root", name: "My Drive" },
@@ -21,10 +19,11 @@ function FolderPage() {
   const { folderId = "root" } = useParams();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<FileItem[]>([]);
-async function handleDelete(id: string) {
-  await deleteFile(id);
-  setFiles(files => files.filter(f => f.id !== id));
-}
+
+  async function handleDelete(id: string) {
+    await deleteFile(id);
+    setFiles((files) => files.filter((f) => f.id !== id));
+  }
 
   const currentFolder =
     demoFolders.find((f) => f.id === folderId)?.name || "My Drive";

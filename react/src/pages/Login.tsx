@@ -3,19 +3,14 @@ import { useAppDispatch } from "../app/hooks";
 import { loginSuccess } from "../features/auth/auth.slice";
 import { loginApi } from "../features/auth/auth.api";
 import { Link, useNavigate } from "react-router-dom";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../layouts/AuthLayout";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
 
 export default function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onFinish = async (values: LoginFormValues) => {
+  const onFinish = async (values: { email: string; password: string }) => {
     const { data } = await loginApi(values);
     dispatch(loginSuccess(data));
     navigate("/folders/root");
@@ -32,7 +27,14 @@ export default function Login() {
           label={
             <span className="text-gray-600 font-medium">Email Address</span>
           }
-          rules={[{ required: true, message: "Please input your email!" }]}
+          rules={[
+            {
+              required: true,
+              type: "email",
+              message: "Please input your email!",
+            },
+            { transform: (value) => value.trim() },
+          ]}
         >
           <Input
             prefix={<UserOutlined className="text-gray-400" />}
@@ -44,7 +46,10 @@ export default function Login() {
         <Form.Item
           name="password"
           label={<span className="text-gray-600 font-medium">Password</span>}
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[
+            { required: true, message: "Please input your password!" },
+            { transform: (value) => value.trim() }
+          ]}
         >
           <Input.Password
             prefix={<LockOutlined className="text-gray-400" />}

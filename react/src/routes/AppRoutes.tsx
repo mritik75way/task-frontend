@@ -1,59 +1,45 @@
-import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./ProtectedRoute";
-import PublicRoute from "./PublicRoutes";
+import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
-import ProfilePage from "../pages/Profile";
-import NotFoundPage from "../pages/NotFound";
 import ResetPasswordPage from "../pages/ResetPassword";
+import ProfilePage from "../pages/Profile";
 import FolderPage from "../pages/FolderPage";
-import AppShell from "../layouts/MainLayout";
 import NotificationPage from "../pages/NotificationPage";
+import NotFoundPage from "../pages/NotFound";
+import AppShell from "../layouts/MainLayout";
+import GlobalError from "../pages/GlobalError";
+import RootLayout from "../layouts/RootLayout";
+import { authLoader } from "../components/loaders/authLoader";
+import { protectedLoader } from "../components/loaders/protectedLoader";
+import { publicLoader } from "../components/loaders/publicLoader";
 
-const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <PublicRoute>
-            <RegisterPage />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/forgot-password"
-        element={
-          <PublicRoute>
-            <ForgotPassword />
-          </PublicRoute>
-        }
-      />
-
-      <Route
-        element={
-          <ProtectedRoute>
-            <AppShell />
-          </ProtectedRoute>
-        }
-      >
-        <Route path="/folders/:folderId" element={<FolderPage />} />
-        <Route path="/notifications" element = {<NotificationPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-      </Route>
-      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
-  );
-};
-
-export default AppRoutes;
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    loader: authLoader,
+    errorElement: <GlobalError />,
+    children: [
+      {
+        loader: publicLoader,
+        children: [
+          { path: "/login", element: <Login /> },
+          { path: "/register", element: <RegisterPage /> },
+          { path: "/forgot-password", element: <ForgotPassword /> },
+          { path: "/reset-password/:token", element: <ResetPasswordPage /> },
+        ],
+      },
+      {
+        element: <AppShell />,
+        loader: protectedLoader,
+        children: [
+          { path: "/folders/:folderId", element: <FolderPage /> },
+          { path: "/notifications", element: <NotificationPage /> },
+          { path: "/profile", element: <ProfilePage /> },
+        ],
+      },
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
+]);

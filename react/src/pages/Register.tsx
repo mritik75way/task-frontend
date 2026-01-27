@@ -1,20 +1,18 @@
 import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import AuthLayout from "../components/AuthLayout";
-import api from "../services/axios";
-
-interface RegisterFormValues {
-  name: string;
-  email: string;
-  password: string;
-}
+import AuthLayout from "../layouts/AuthLayout";
+import { registerApi } from "../features/auth/auth.api";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const onFinish = async (values: RegisterFormValues) => {
-    await api.post("/auth/register", values);
+  const onFinish = async (values: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
+    await registerApi(values);
     message.success("Registration successful! Please login.");
     navigate("/login");
   };
@@ -39,6 +37,7 @@ const RegisterPage = () => {
           label="Email Address"
           rules={[
             { required: true, type: "email", message: "Enter a valid email!" },
+            { transform: (value) => value.trim() },
           ]}
         >
           <Input
@@ -57,6 +56,7 @@ const RegisterPage = () => {
               min: 6,
               message: "Password must be at least 6 characters!",
             },
+            { transform: (value) => value.trim() },
           ]}
         >
           <Input.Password

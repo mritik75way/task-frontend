@@ -1,11 +1,11 @@
-import axios from "axios";
 import { store } from "../../app/store";
 import {
   addUpload,
   updateProgress,
   markCompleted,
   markError,
-} from "./uploadsSlice";
+} from "./upload.slice";
+import api from "../../services/api";
 
 export function startUpload(file: File, folderId: string) {
   const id = crypto.randomUUID();
@@ -23,8 +23,8 @@ export function startUpload(file: File, folderId: string) {
   formData.append("file", file);
   formData.append("folderId", folderId);
 
-  axios
-    .post("http://localhost:3000/api/uploads", formData, {
+  api
+    .post("/uploads", formData, {
       onUploadProgress(e) {
         const total = e.total || 1;
         const percent = Math.round((e.loaded * 100) / total);

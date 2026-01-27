@@ -1,10 +1,6 @@
 import { FolderFilled } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
-
-interface Folder {
-  id: string;
-  name: string;
-}
+import type { Folder } from "../features/uploads/upload.types";
 
 function FolderGrid({ folders }: { folders: Folder[] }) {
   const { folderId } = useParams();
@@ -13,7 +9,6 @@ function FolderGrid({ folders }: { folders: Folder[] }) {
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       {folders.map(folder => {
         const active = folder.id === folderId;
-
         return (
           <Link
             key={folder.id}

@@ -1,16 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-export interface UploadItem {
-  id: string;
-  fileName: string;
-  progress: number;
-  status: "uploading" | "completed" | "error";
-}
-
-interface UploadState {
-  items: UploadItem[];
-  visible: boolean;
-}
+import type { UploadItem, UploadState } from "./upload.types";
 
 const initialState: UploadState = {
   items: [],
@@ -48,7 +37,6 @@ const uploadsSlice = createSlice({
     },
   },
 });
-
 
 export const {
   addUpload,

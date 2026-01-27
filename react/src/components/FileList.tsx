@@ -5,7 +5,8 @@ import {
   FileTextOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import {type FileItem } from "../types/file";
+import type { FileItem } from "../features/uploads/upload.types";
+import { Popconfirm } from "antd";
 
 function icon(name: string) {
   if (name.endsWith(".png") || name.endsWith(".jpg"))
@@ -17,12 +18,13 @@ function icon(name: string) {
   return <FileOutlined className="text-gray-400" />;
 }
 
-interface Props {
+function FileList({
+  files,
+  onDelete,
+}: {
   files: FileItem[];
   onDelete: (id: string) => void;
-}
-
-function FileList({ files, onDelete }: Props) {
+}) {
   if (!files.length) {
     return (
       <div className="text-sm text-gray-400 text-center py-12">
@@ -33,7 +35,7 @@ function FileList({ files, onDelete }: Props) {
 
   return (
     <div className="divide-y rounded-lg border bg-white">
-      {files.map(file => (
+      {files.map((file) => (
         <div
           key={file.id}
           className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 group"
@@ -45,12 +47,18 @@ function FileList({ files, onDelete }: Props) {
             </div>
           </div>
 
-          <button
-            onClick={() => onDelete(file.id)}
-            className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500"
+          <Popconfirm
+            title="Delete file?"
+            description="This action cannot be undone."
+            okText="Delete"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true }}
+            onConfirm={() => onDelete(file.id)}
           >
-            <DeleteOutlined />
-          </button>
+            <button className="text-red-500 hover:text-red-600">
+              <DeleteOutlined />
+            </button>
+          </Popconfirm>
         </div>
       ))}
     </div>

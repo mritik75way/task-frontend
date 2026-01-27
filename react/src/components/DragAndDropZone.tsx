@@ -1,11 +1,12 @@
-import {type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 
-interface Props {
+function DragDropZone({
+  onFiles,
+  children,
+}: {
   onFiles: (files: FileList) => void;
   children: ReactNode;
-}
-
-function DragDropZone({ onFiles, children }: Props) {
+}) {
   const [active, setActive] = useState(false);
   const counter = useRef(0);
 
@@ -49,9 +50,7 @@ function DragDropZone({ onFiles, children }: Props) {
 
       {active && (
         <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl border-2 border-dashed border-blue-500 bg-blue-500/10 pointer-events-none">
-          <div className="text-blue-600 font-medium">
-            Drop files to upload
-          </div>
+          <div className="text-blue-600 font-medium">Drop files to upload</div>
         </div>
       )}
     </div>

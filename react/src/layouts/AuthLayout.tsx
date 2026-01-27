@@ -1,10 +1,20 @@
-import React from 'react';
+import React from "react";
 
-const AuthLayout = ({ children, title, subtitle }: { children: React.ReactNode, title: string, subtitle: string }) => {
+const AuthLayout = ({
+  children,
+  title,
+  subtitle,
+}: {
+  children: React.ReactNode;
+  title: string;
+  subtitle: string;
+}) => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">{title}</h2>
+        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          {title}
+        </h2>
         <p className="mt-2 text-sm text-gray-600">{subtitle}</p>
       </div>
 

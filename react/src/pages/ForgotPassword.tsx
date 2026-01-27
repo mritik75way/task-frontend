@@ -1,16 +1,12 @@
 import { Form, Input, Button, message } from "antd";
 import { forgotPasswordApi } from "../features/auth/auth.api";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../layouts/AuthLayout";
 import { ArrowLeftOutlined, MailOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-interface ForgotPasswordValues {
-  email: string;
-}
-
 const ForgotPassword = () => {
   const [form] = Form.useForm();
-  const onFinish = async (values: ForgotPasswordValues) => {
+  const onFinish = async (values: { email: string }) => {
     await forgotPasswordApi(values.email);
     message.success("Password reset link sent");
   };
